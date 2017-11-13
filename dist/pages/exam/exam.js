@@ -5,7 +5,8 @@ Page({
 	onLoad: function onLoad(params) {
 		var _this = this;
 		_this.setData({
-			layer: false
+			layer: false,
+			token: params.token
 		});
 		wx.getStorage({
 			key: "userInfo",
@@ -15,6 +16,7 @@ Page({
 					_this.setData({
 						questionList: res.qaList,
 						paper_id: res.paperInfo.id,
+						paperInfo: res.paperInfo,
 						questionIndex: 0
 					});
 					var answerList = [];
@@ -27,9 +29,20 @@ Page({
 					}
 					_this.setData({
 						questionList: questionList,
-						answerList: answerList
-					});
-					console.log(_this.data.questionList);
+						answerList: answerList,
+						time: res.paperInfo.time * 60
+					});var interval = setInterval(function () {
+						_this.setData({
+							remainTime: app.util.clockTime(_this.data.time--)
+						});
+						if (_this.data.time <= 0) {
+							clearInterval(interval);
+							wx.showToast({
+								title: "时间结束"
+							});
+							_this.submitResult();
+						}
+					}, 1000);
 				});
 			}, fail: function fail() {
 				wx.redirectTo({
@@ -61,7 +74,7 @@ Page({
 		});
 	},
 	submitResult: function submitResult() {
-		var str = '{"status":1,"paper_id":"' + this.data.paper_id + '","answers":{';
+		var str = '{"status":1,"token":"' + this.data.token + '","paper_id":"' + this.data.paper_id + '","answers":{';
 		var answerarr = [];
 		for (var i = 0, len = this.data.answerList.length; i < len; i++) {
 			if (this.data.answerList[i].type == 1) {
@@ -73,12 +86,13 @@ Page({
 		str += answerarr.join(",");
 		str += '}}';
 		var obj = JSON.parse(str);
+		console.log(obj);
 		wx.request({
 			url: app.util.webUrl + "/index.php?r=paper/submit",
 			data: obj,
 			header: { 'content-type': 'application/json' },
 			success: function success(res) {
-				console.log(res.data);
+				console.log('exam result', res.data);
 				wx.setStorage({
 					key: "resultInfo",
 					data: res.data,

@@ -3,9 +3,19 @@
 var app = getApp();
 Page({
 	onLoad: function onLoad() {
-		this.setData({
-			disabled: true,
-			code: app.globalData.code
+		var _this = this;
+		wx.getStorage({
+			key: "userInfo",
+			success: function success(res) {
+				wx.switchTab({
+					url: "/pages/index/index"
+				});
+			}, fail: function fail() {
+				_this.setData({
+					disabled: true,
+					code: app.globalData.code
+				});
+			}
 		});
 	},
 	inputName: function inputName(e) {
@@ -33,19 +43,25 @@ Page({
 		}
 	},
 	formSubmit: function formSubmit(e) {
-		console.log(e.detail);
+		var _this = this;
 		app.util.find("/index.php?r=site/login", e.detail.value).then(function (res) {
-			wx.setStorage({
-				key: "userInfo",
-				data: res.data,
-				success: function success() {
-					console.log('a');
-				}
-			});
-			console.log('login', res);
-			wx.switchTab({
-				url: "/pages/index/index"
-			});
+			console.log("login", res);
+			if (res.status == 1) {
+				wx.setStorage({
+					key: "userInfo",
+					data: res.data,
+					success: function success() {
+						wx.switchTab({
+							url: "/pages/index/index"
+						});
+					}
+				});
+				console.log('aa');
+			} else if (res.status == 0) {
+				_this.setData({
+					reason: res.reason
+				});
+			}
 		});
 	}
 });

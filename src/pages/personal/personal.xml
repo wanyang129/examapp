@@ -1,0 +1,13 @@
+<view class="personal-top">
+	<image class="portrait" src="{{userInfo.avatarUrl}}"></image>
+	<view class="name">{{personalInfo.username}}</view>
+</view>
+<view class="container container-info">
+	<view class="info-item"><image class="icon" src="/img/icon_my_youxiang.png"></image>{{personalInfo.email}}</view>
+	<view class="info-item" wx:if="{{personalInfo.department}}"><image class="icon" src="/img/icon_my_zhiwei.png"></image>{{personalInfo.department}}</view>
+	<view class="info-item" wx:if="{{personalInfo.telephone}}"><image class="icon" src="/img/icon_my_dianhua.png"></image>{{personalInfo.telephone}}</view>
+</view>
+<view class="container">
+	<view class="exam-item">成绩统计<navigator url="/pages/count/count" hover-class="none" class="exam-chat">查看</navigator></view>
+	<view class="exam-item">寻找客服<view class="exam-chat">QQ群：5826391</view class="exam-chat"></view>
+</view>
