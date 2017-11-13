@@ -8,6 +8,6 @@
 	</navigator>
 	<view class="tips">
 		<view class="tips-title">特别注意</view>
-		<view class="tips-item">{{item.tips}}</view>
+		<view class="tips-item" wx:for="{{item.tips}}" wx:for-item="tips">{{tips}}</view>
 	</view>
 </block>

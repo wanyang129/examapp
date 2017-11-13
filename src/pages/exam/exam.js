@@ -4,48 +4,51 @@ Page({
 		var _this=this;
 		_this.setData({
 			layer:false,
+			examlayer:false,
+			isview:false,
 			token:params.token
 		});
-		wx.getStorage({
-			key:"userInfo",
-			success:function(res){
-				app.util.find("/index.php?r=paper/generate",{id:params.id,token:res.data.token}).then(function(res){
-					console.log('paper',res);
-					_this.setData({
-						questionList:res.qaList,
-						paper_id:res.paperInfo.id,
-						paperInfo:res.paperInfo,
-						questionIndex:0
-					})
-					var answerList=[];
-					var questionList=res.qaList;
-					for(var i=0;i<res.qaList.length;i++){
-						answerList.push({question_id:res.qaList[i].question_id,type:res.qaList[i].type,answers:[]});
-						for(var j=0;j<questionList[i].answers.length;j++)
-							questionList[i].answers[j].sequence=String.fromCharCode(65+j);
-					}
-					_this.setData({
-						questionList:questionList,
-						answerList:answerList,
-						time:res.paperInfo.time*60
-					});					var interval=setInterval(function(){
-						_this.setData({
-							remainTime:app.util.clockTime(_this.data.time--)
-						});
-						if(_this.data.time<=0){
-							clearInterval(interval);
-							wx.showToast({
-								title:"时间结束"
-							});
-							_this.submitResult();
-						}
-					},1000);
-				})
-			},fail:function(){
-				wx.redirectTo({
-					url:"/pages/login/login"
+		app.util.find("/index.php?r=paper/generate",{id:params.id,token:params.token}).then(function(res){
+			console.log('paper',res);
+			if(res.status==0){
+				_this.setData({
+					examlayer:true
 				});
+			}else{
+				_this.setData({
+					questionList:res.qaList,
+					isview:true,
+					interval:null,
+					paper_id:res.paperInfo.id,
+					paperInfo:res.paperInfo,
+					questionIndex:0
+				})
+				var answerList=[];
+				var questionList=res.qaList;
+				for(var i=0;i<res.qaList.length;i++){
+					answerList.push({question_id:res.qaList[i].question_id,type:res.qaList[i].type,answers:[]});
+					for(var j=0;j<questionList[i].answers.length;j++)
+						questionList[i].answers[j].sequence=String.fromCharCode(65+j);
+				}
+				_this.setData({
+					questionList:questionList,
+					answerList:answerList,
+					time:res.paperInfo.time*60
+				});					
+				_this.data.interval=setInterval(function(){
+					_this.setData({
+						remainTime:app.util.clockTime(_this.data.time--)
+					});
+					if(_this.data.time<=0){
+						clearInterval(_this.data.interval);
+						wx.showToast({
+							title:"时间结束"
+						});
+						_this.submitResult();
+					}
+				},1000);
 			}
+			
 		})
 	},
 	formatAnswer:function(value,id){
@@ -70,7 +73,17 @@ Page({
 			layer:false
 		});
 	},
+	closeexamLayer:function(){
+		this.setData({
+			examlayer:false
+		});
+		wx.switchTab({
+			url:"/pages/index/index"
+		});
+	},
 	submitResult:function(){
+		console.log('交卷');
+		clearInterval(this.data.interval);
 		var str='{"status":1,"token":"'+this.data.token+'","paper_id":"'+this.data.paper_id+'","answers":{';
 		var answerarr=[];
 		for(var i=0,len=this.data.answerList.length;i<len;i++){

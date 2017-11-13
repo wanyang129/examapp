@@ -13,7 +13,8 @@ Page({
 			}, fail: function fail() {
 				_this.setData({
 					disabled: true,
-					code: app.globalData.code
+					code: app.globalData.code,
+					reason: false
 				});
 			}
 		});
@@ -59,7 +60,7 @@ Page({
 				console.log('aa');
 			} else if (res.status == 0) {
 				_this.setData({
-					reason: res.reason
+					reason: true
 				});
 			}
 		});

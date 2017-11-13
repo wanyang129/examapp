@@ -24,7 +24,7 @@
 }
 .prev{float: left;}
 .next{float: right;}
-.mask{width: 100%;height: 100%;position: fixed;top: 0;bottom: 0;left: 0;right: 0;z-index:50;}
+.mask{width: 100%;height: 100%;position: fixed;top: 0;bottom: 0;left: 0;right: 0;z-index:50;background:rgba(0,0,0,0.5);}
 .layer{position: fixed;background: #fff;width: 560rpx;height: 340rpx;left: 50%;top: 50%;transform:translate(-50%,-50%);box-shadow: 0 4px 10px 0 rgba(0,0,0,0.15);
 border-radius:4px;z-index:70;text-align: center;}
 .layer-tips{line-height: 24rpx;margin: 102rpx auto 0;}
@@ -34,3 +34,16 @@ border-radius:4px;z-index:70;text-align: center;}
 	&.cancel{border: 1px solid #D6D6D6;color: #9B9B9B;}
 	&.ok{color: #fff;background: #5392FF;}
 }
+.checkbox wx-radio, .radio wx-radio {opacity:1;}
+div.wx-radio-wrapper{width: 21px;}
+radio .wx-radio-input,checkbox .wx-checkbox-input{border: 2px solid #E9E9E9;width: 21px;height: 21px;-webkit-box-sizing:border-box;box-sizing:border-box;margin-right:32rpx;}
+radio .wx-radio-input.wx-radio-input-checked,checkbox .wx-checkbox-input.wx-checkbox-input-checked{background-color: transparent !important;border: 1px solid #ff5267;}
+radio .wx-radio-input.wx-radio-input-checked:before,checkbox .wx-checkbox-input.wx-checkbox-input-checked:before{
+	display: none;
+}
+radio .wx-radio-input.wx-radio-input-checked:after,checkbox .wx-checkbox-input.wx-checkbox-input-checked:after{
+	content:"";width: 15px;height: 15px;position: absolute;top: 50%;left: 50%;-webkit-transform:translate(-52%,-51%);transform:translate(-52%,-51%);
+	background: #ff5267;border-radius:50%;
+}
+
+checkbox .wx-checkbox-input{border-radius:50%;}
