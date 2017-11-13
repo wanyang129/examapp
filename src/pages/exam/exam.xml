@@ -6,7 +6,7 @@
 			<button formType="submit" class="paper-submit">交卷</button formType="submit">
 		</view>
 		<view class="{{index==questionIndex?'paper-body':'paper-body none'}}" wx:for="{{questionList}}" wx:for-item="parentitem">
-				<view class="paper-title"><text>{{index+1}}、</text>{{parentitem.question}}</view>
+				<view class="paper-title"><text>{{index+1}}、</text><text class="question-tag" wx:if="{{parentitem.type==2}}">多选</text>{{parentitem.question}}</view>
 				<radio-group data-id="{{parentitem.question_id}}" class="radio-group" wx:if="{{parentitem.type==1}}" bindchange="radioChange">
 					<label class="radio" wx:for="{{parentitem.answers}}" wx:for-item="subitem">
 						<radio color="#ff5267" value="{{subitem.answer_id}}"/>{{subitem.sequence}}、{{subitem.answer}}
@@ -35,8 +35,3 @@
 		<view class="ok layer-btn" bindtap="submitResult">交卷</view>
 	</view>
 </block>
-<view class="{{examlayer?'mask':'mask none'}}"></view>
-<view class="{{examlayer?'layer':'layer none'}}">
-	<view class="layer-tips">您已参加过考试</view>
-	<view class="cancel layer-btn" bindtap="closeexamLayer">确定</view>
-</view>

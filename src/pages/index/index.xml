@@ -4,7 +4,7 @@
 		<image src="/img/subject_bg.png"></image>
 		<view class="exam-title">{{item.cat_name}}</view>
 		<view class="exam-date">考试时间：{{item.time_text}}</view>
-		<view class="periodical">第一期</view>
+		<!-- <view class="periodical">第一期</view> -->
 	</navigator>
 	<view class="tips">
 		<view class="tips-title">特别注意</view>

@@ -6,15 +6,14 @@ Page({
 		var _this = this;
 		_this.setData({
 			layer: false,
-			examlayer: false,
 			isview: false,
 			token: params.token
 		});
 		app.util.find("/index.php?r=paper/generate", { id: params.id, token: params.token }).then(function (res) {
 			console.log('paper', res);
 			if (res.status == 0) {
-				_this.setData({
-					examlayer: true
+				wx.redirectTo({
+					url: "/pages/result/result?id=" + res.paperInfo.id
 				});
 			} else {
 				_this.setData({
@@ -65,6 +64,9 @@ Page({
 		});
 		console.log(this.data.answerList);
 	},
+	onUnload: function onUnload() {
+		clearInterval(this.data.interval);
+	},
 	questionSubmit: function questionSubmit(e) {
 		this.setData({
 			layer: true
@@ -75,16 +77,7 @@ Page({
 			layer: false
 		});
 	},
-	closeexamLayer: function closeexamLayer() {
-		this.setData({
-			examlayer: false
-		});
-		wx.switchTab({
-			url: "/pages/index/index"
-		});
-	},
 	submitResult: function submitResult() {
-		console.log('交卷');
 		clearInterval(this.data.interval);
 		var str = '{"status":1,"token":"' + this.data.token + '","paper_id":"' + this.data.paper_id + '","answers":{';
 		var answerarr = [];
