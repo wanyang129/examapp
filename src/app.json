@@ -10,7 +10,7 @@
 		
 	],
 	"window":{
-		"navigationBarTitleText":"考试"
+		"navigationBarTitleText":"小程序-考试"
 	},
 	"tabBar":{
 		"color":"#C8C8C8",
