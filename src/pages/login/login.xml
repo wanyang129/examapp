@@ -1,6 +1,6 @@
 <image class="logo" src="/img/logo.png"></image>
 <form bindsubmit="formSubmit">
-	<input type="text" name="code" class="none" value="{{code}}"/>
+	<input type="text" name="openid" class="none" value="{{openid}}"/>
 	<view class="form-item">
 		<image class="{{disabled?'icon':'icon none'}}" src="/img/icon_name_n.png"></image>
 		<image class="{{disabled?'icon none':'icon'}}" src="/img/icon_name_s.png"></image>

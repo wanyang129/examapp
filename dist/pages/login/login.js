@@ -3,6 +3,7 @@
 var app = getApp();
 Page({
 	onLoad: function onLoad() {
+		app.editPage();
 		var _this = this;
 		wx.getStorage({
 			key: "userInfo",
@@ -11,9 +12,14 @@ Page({
 					url: "/pages/index/index"
 				});
 			}, fail: function fail() {
+				setTimeout(function () {
+					_this.setData({
+						code: app.globalData.code,
+						openid: app.globalData.openid
+					});
+				}, 1000);
 				_this.setData({
 					disabled: true,
-					code: app.globalData.code,
 					reason: false
 				});
 			}
@@ -44,6 +50,7 @@ Page({
 		}
 	},
 	formSubmit: function formSubmit(e) {
+		console.log(e);
 		var _this = this;
 		app.util.find("/index.php?r=site/login", e.detail.value).then(function (res) {
 			console.log("login", res);
@@ -57,7 +64,6 @@ Page({
 						});
 					}
 				});
-				console.log('aa');
 			} else if (res.status == 0) {
 				_this.setData({
 					reason: true

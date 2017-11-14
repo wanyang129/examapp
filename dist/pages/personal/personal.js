@@ -15,8 +15,6 @@ Page({
 		});
 	},
 	onLoad: function onLoad() {
-		console.log(app.globalData);
-		console.log("aa");
 		var _this = this;
 		wx.getSetting({
 			success: function success(res) {

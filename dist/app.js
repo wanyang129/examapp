@@ -4,14 +4,6 @@ var util = require('./utils/util.js');
 App({
 	util: util,
 	onLaunch: function onLaunch() {
-		wx.setEnableDebug({
-			enableDebug: true,
-			success: function success(res) {
-				console.log('调试成功', res);
-			}, fail: function fail(res) {
-				console.log('调试fail');
-			}
-		});
 		var _this = this;
 		wx.login({
 			success: function success(res) {
@@ -21,15 +13,15 @@ App({
 					console.log(res);
 					_this.globalData.openid = res.openid;
 					_this.globalData.session_key = res.session_key;
+					if (res.token !== undefined) {}
 				});
 			}
 		});
 	},
 	globalData: {
-		email: null,
-		token: null,
-		uid: null,
-		username: null
+		code: "",
+		openid: "",
+		session_key: ""
 	}
 });
 //# sourceMappingURL=../maps/app.js.map

@@ -1,5 +1,5 @@
-// var webUrl="http://172.16.57.235:8080";
-var webUrl="http://172.16.117.161:84";
+var webUrl="http://172.16.57.235:8080";
+// var webUrl="http://172.16.117.161:84";
 
 function fetch(path,param){
 	return new Promise(function(resolve,reject){
