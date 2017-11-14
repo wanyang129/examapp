@@ -4,6 +4,14 @@ var util = require('./utils/util.js');
 App({
 	util: util,
 	onLaunch: function onLaunch() {
+		wx.setEnableDebug({
+			enableDebug: true,
+			success: function success(res) {
+				console.log('调试成功', res);
+			}, fail: function fail(res) {
+				console.log('调试fail');
+			}
+		});
 		var _this = this;
 		wx.login({
 			success: function success(res) {

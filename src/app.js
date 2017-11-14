@@ -2,6 +2,14 @@ var util=require('./utils/util.js');
 App({
 	util:util,
 	onLaunch:function(){
+		wx.setEnableDebug({
+		    enableDebug: true,
+		    success:function(res){
+		    	console.log('调试成功',res)
+		    },fail:function(res){
+		    	console.log('调试fail')
+		    }
+		})
 		var _this=this;
 		wx.login({
 			success:function(res){
@@ -13,7 +21,7 @@ App({
 					_this.globalData.session_key=res.session_key;
 				});
 			}
-		})
+		});
 	},
 	globalData:{
 		email:null,
